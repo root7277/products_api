@@ -9,8 +9,9 @@ class CategoryPage extends StatefulWidget {
 
 class _CategoryPageState extends State<CategoryPage> {
   Future getStart() async {
-    await context.read<ProviderModel>().getAllCategory();
-    await context.read<ProviderModel>().getAllProducts(context.read<ProviderModel>().category[0].toString());
+    final providerData = context.read<ProviderModel>();
+    await providerData.getAllCategory();
+    await providerData.getAllProducts(providerData.category[0].toString());
   }
 
   @override
@@ -44,8 +45,9 @@ class _CategoryPageState extends State<CategoryPage> {
                       scrollDirection: Axis.horizontal,
                       itemCount: value.category.length,
                       itemBuilder: (context, index) {
-                        return InkWell(
+                        return GestureDetector(
                           onTap: () {
+                            value.getCurrent(index);
                             value.products.clear();
                             value.getAllProducts(value.category[index].toString());
                           },
@@ -54,12 +56,13 @@ class _CategoryPageState extends State<CategoryPage> {
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 8),
                             decoration: BoxDecoration(
-                              color: Colors.green,
+                              color: value.current == index ? Colors.green : Colors.green.shade100,
                               borderRadius: BorderRadius.circular(15),
+                              border: Border.all(width: 2, color: Colors.green),
                             ),
                             child: Text(
                               value.category[index].toString(),
-                              style: AppStyles.getCategoryStyle(),
+                              style: AppStyles.getCategoryStyle().copyWith(color: value.current == index ? AppColors.appBarColor : Colors.black),
                             ),
                           ),
                         );
@@ -96,9 +99,9 @@ class _CategoryPageState extends State<CategoryPage> {
           ))
         ],
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        context.read<ProviderModel>().getAllCategory();
-      }),
+      // floatingActionButton: FloatingActionButton(onPressed: () {
+      //   context.read<ProviderModel>().getAllCategory();
+      // }),
     );
   }
 }

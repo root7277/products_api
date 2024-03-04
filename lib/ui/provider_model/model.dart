@@ -8,6 +8,7 @@ class ProviderModel extends ChangeNotifier {
   List<ProductsModel> products = [];
   List category = [];
   List<User> users = [];
+  int current = 0;
 
   Future getAllCategory() async {
     final products = await apiModels.getCategory();
@@ -25,6 +26,11 @@ class ProviderModel extends ChangeNotifier {
 
   void getAddUser(User user) {
     users.add(user);
+    notifyListeners();
+  }
+
+  void getCurrent(int index) {
+    current = index;
     notifyListeners();
   }
 }

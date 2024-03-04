@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
     RoutsPage routsPage = RoutsPage();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/category',
+      initialRoute: RouteName.splash,
       onGenerateRoute: (settings) => routsPage.getPage(settings),
     );
   }

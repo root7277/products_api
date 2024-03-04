@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:provider_state_managnment/resours/app_style.dart';
+import 'package:provider_state_managnment/resours/shorts.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -11,7 +10,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   Future getSplash() async {
     return Future.delayed(const Duration(seconds: 3), () {
-      return Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+      return Navigator.pushNamedAndRemoveUntil(context, RouteName.category, (route) => false);
     });
   }
 
