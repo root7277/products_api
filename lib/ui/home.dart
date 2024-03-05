@@ -1,5 +1,5 @@
-import 'package:hive/hive.dart';
 import 'package:provider_state_managnment/resours/shorts.dart';
+import 'package:provider_state_managnment/ui/provider_model/second_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,55 +9,37 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  TextEditingController name = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final myBox = Hive.box('myBox');
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.primaryColors,
         title: Text('Home Page', style: AppStyles.getAppBarStyles()),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: TextField(
-              controller: name,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-              ),
-            ),
-          ),
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: myBox.values.length,
+      body: Consumer<SecondProvider>(
+        builder: (context, value, child) {
+          return ListView.builder(
+            itemCount: value.userData.values.length,
             itemBuilder: (context, index) {
+              List<User> data = value.userData.values.toList().cast();
               return ListTile(
                 leading: CircleAvatar(
                   child: Text('${index + 1}'),
                 ),
                 title: Text(
-                  myBox.values.toList()[index],
+                  data[index].name,
                   style: AppStyles.getAppBarStyles().copyWith(color: Colors.black),
                 ),
-                trailing: IconButton(
-                    onPressed: () {
-                      setState(() {});
-                      myBox.deleteAt(index);
-                    },
-                    icon: const Icon(Icons.cancel)),
+                subtitle: Text(data[index].phone.toString()),
+                trailing: IconButton(onPressed: () {}, icon: const Icon(Icons.cancel)),
               );
             },
-          ),
-        ],
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          setState(() {
-            myBox.add(name.text);
-            name.clear();
-          });
+          Navigator.pushNamed(context, RouteName.second);
         },
         child: const Icon(Icons.add),
       ),

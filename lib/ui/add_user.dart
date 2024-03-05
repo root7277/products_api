@@ -1,4 +1,5 @@
 import 'package:provider_state_managnment/resours/shorts.dart';
+import 'package:provider_state_managnment/ui/provider_model/second_provider.dart';
 
 class AddUser extends StatefulWidget {
   const AddUser({super.key});
@@ -42,7 +43,7 @@ class _AddUserState extends State<AddUser> {
         ],
       ),
       floatingActionButton: FloatingActionButton(onPressed: () {
-        context.read<ProviderModel>().getAddUser(User(name: name.text, phone: int.parse(phone.text)));
+        context.read<SecondProvider>().getAddUser(User(name: name.text, phone: int.parse(phone.text)));
         Navigator.pop(context);
       }),
     );
